@@ -1,3 +1,4 @@
+import http from "http";
 import pino from "pino";
 import { startTelegramBot } from "./bot";
 import { telegramSqlClient } from "./postgres";
@@ -19,6 +20,19 @@ const shutdown = new AbortController();
 
 process.once("SIGINT", () => shutdown.abort());
 process.once("SIGTERM", () => shutdown.abort());
+
+// --- AGGIUNTA DEL SERVER HTTP PER UPTIMEROBOT ---
+const PORT = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Bot is active and running!\n");
+});
+
+server.listen(Number(PORT), () => {
+  logger.info({ port: PORT }, "HTTP server listening for uptime pings");
+});
+// ------------------------------------------------
 
 startTelegramBot({
   token,
