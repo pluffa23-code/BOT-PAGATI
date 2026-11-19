@@ -1,6 +1,7 @@
 FROM node:24-alpine
 WORKDIR /app
-COPY package.json ./
-RUN npm install --omit=dev
-COPY src/ ./src/
-CMD ["node", "src/telegram/standalone.ts"]
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npx tsc
+CMD ["node", "dist/telegram-bot.mjs"]
