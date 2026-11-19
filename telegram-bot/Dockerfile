@@ -4,5 +4,5 @@ COPY package*.json ./
 RUN npm install
 RUN npm install -g typescript
 COPY . .
-RUN tsc
+RUN tsc -p tsconfig.json
 CMD ["node", "dist/telegram-bot.mjs"]
