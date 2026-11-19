@@ -6,6 +6,20 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
+import http from "http";
+
+const PORT = process.env.PORT || 3000;
+
+// Server HTTP per mantenere attivo il servizio su Render 24/7
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+  res.end("SONO VIVO\n");
+});
+
+server.listen(Number(PORT), "0.0.0.0", () => {
+  console.log(`Server HTTP in ascolto sulla porta ${PORT}`);
+});
+
 // src/telegram/standalone.ts
 import pino from "pino";
 
