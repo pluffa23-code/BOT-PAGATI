@@ -21,18 +21,18 @@ const shutdown = new AbortController();
 process.once("SIGINT", () => shutdown.abort());
 process.once("SIGTERM", () => shutdown.abort());
 
-// --- AGGIUNTA DEL SERVER HTTP PER UPTIMEROBOT ---
+// --- SERVER HTTP PER UPTIMEROBOT (MOSTRA "SONO VIVO") ---
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("Bot is active and running!\n");
+  res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+  res.end("SONO VIVO\n");
 });
 
-server.listen(Number(PORT), () => {
+server.listen(Number(PORT), "0.0.0.0", () => {
   logger.info({ port: PORT }, "HTTP server listening for uptime pings");
 });
-// ------------------------------------------------
+// --------------------------------------------------------
 
 startTelegramBot({
   token,
